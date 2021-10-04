@@ -6,6 +6,9 @@ export const Card = ({size}) => {
 			...styles.card,
 			...styles[size]
 		}}>
+		<h1>Hello</h1>
+		<h3>Hello</h3>
+		<h6>Hello</h6>
 
 		</div>
 	);
@@ -14,9 +17,10 @@ export const Card = ({size}) => {
 const styles = {
 	card: {
 		margin: 15,
-		padding: 10,
+		padding: 15,
 		borderRadius: '16px',
-		backgroundColor: 'white'
+		backgroundColor: '#A997DF',
+		justifyContent: 'center'
 	},
 	sm: {
 		gridRowEnd: 'span 26'
