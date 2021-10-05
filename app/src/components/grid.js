@@ -5,50 +5,55 @@ import { Card } from './card';
 
 const myToken = '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';
 
-export const RepoGrid = ({ login }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [language, setLanguage] = useState('');
-  const [clone_url, setCloneUrl] = useState('');
-  const [updated_at, setUpdatedAt] = useState('');
+function getRepoData(login) {
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${login}/repos`, {
+  async function getData() {
+    const repos = [];
+    const res = await fetch(`https://api.github.com/users/${login}/repos`, {
       headers: {
         Authorization: `token ${myToken}`,
       },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        for (var i = 0; i < data.length; i++) setData(data[i]);
+    });
+    const content = await res.json();
+    for (var i = 0; i < content.length; i++) {
+      repos.push({
+        name: content[i].name,
+        description: content[i].description,
+        language: content[i].language,
+        url: content[i].clone_url,
+        date: content[i].updated_at,
       });
+    }
+    setData(repos);
+  }
+
+  useEffect(() => {
+    getData();
   }, []);
+  return data;
+}
 
-  const setData = ({ name, description, language, clone_url, updated_at }) => {
-    setName(name);
-    setDescription(description);
-    setLanguage(language);
-    setCloneUrl(clone_url);
-    setUpdatedAt(updated_at);
-  };
-
-  console.log(name);
-  console.log(description);
-  console.log(language);
-  console.log(clone_url);
-  console.log(updated_at);
-  return (
-    <div>
+export const RepoGrid = ({ login }) => {
+  let repos = getRepoData(login);
+  if (repos) {
+    console.log(repos);
+    return (
       <div style={styles.card_container}>
-        <Card size={'sm'} />
-        <Card size={'lg'} />
-        <Card size={'md'} />
-        <Card size={'sm'} />
-        <Card size={'sm'} />
-        <Card size={'lg'} />
+        {repos.map((item, index) => (
+          <Card
+            key={index}
+            size={'md'}
+            name={item.name}
+            description={item.description}
+            language={item.language}
+            url={item.url}
+            updated_at={item.updated_at}
+          />
+        ))}
       </div>
-    </div>
-  );
+    );
+  } else return <></>;
 };
 
 const styles = {

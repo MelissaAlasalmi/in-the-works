@@ -1,7 +1,16 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css';
 
-export const Card = ({ size }) => {
+export const Card = ({
+  size,
+  name,
+  description,
+  language,
+  url,
+  updated_at,
+}) => {
+  const timeOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
   return (
     <div
       style={{
@@ -9,9 +18,16 @@ export const Card = ({ size }) => {
         ...styles[size],
       }}
     >
-      <h1>Hello</h1>
-      <h3>Hello</h3>
-      <h6>Hello</h6>
+      <h2>{name}</h2>
+      <h6>{description}</h6>
+      <h6>
+        Last updated:{' '}
+        {new Date(updated_at).toLocaleDateString(undefined, timeOptions)}
+      </h6>
+      <h4>Written in {language}</h4>
+      <h6>
+        See it <a href={url}>here!</a>
+      </h6>
     </div>
   );
 };
