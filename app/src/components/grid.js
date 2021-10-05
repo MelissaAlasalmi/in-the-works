@@ -3,18 +3,12 @@ import '../App.css';
 import { useState, useEffect } from 'react';
 import { Card } from './card';
 
-const myToken = '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';
-
 function getRepoData(login) {
   const [data, setData] = useState([]);
 
   async function getData() {
     const repos = [];
-    const res = await fetch(`https://api.github.com/users/${login}/repos`, {
-      headers: {
-        Authorization: `token ${myToken}`,
-      },
-    });
+    const res = await fetch(`https://api.github.com/users/${login}/repos`);
     const content = await res.json();
     for (var i = 0; i < content.length; i++) {
       repos.push({

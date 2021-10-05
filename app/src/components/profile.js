@@ -3,8 +3,6 @@ import { useState, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { RepoGrid } from './grid';
 
-const myToken = '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';
-
 function GetAvailability({ availability }) {
   if (availability === true)
     return (
@@ -90,11 +88,7 @@ const Profile = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`https://api.github.com/users/${userInput}`, {
-      headers: {
-        Authorization: `token ${myToken}`,
-      },
-    })
+    fetch(`https://api.github.com/users/${userInput}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -125,11 +119,7 @@ const Profile = () => {
   const handleSubmit = () => {
     setError('');
     setLogin('');
-    fetch(`https://api.github.com/users/${userInput}`, {
-      headers: {
-        Authorization: `token ${myToken}`,
-      },
-    })
+    fetch(`https://api.github.com/users/${userInput}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.message) setError(data.message);

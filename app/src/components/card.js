@@ -27,7 +27,6 @@ export function toTitle(string) {
 //^^^^all credit for these two functions go to Github user zellwk^^^^//
 
 export const Card = ({ size, name, description, language, url }) => {
-  //{email ? <h6>Email: {email}</h6> : <></>}
   return (
     <div
       style={{
