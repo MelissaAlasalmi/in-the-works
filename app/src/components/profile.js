@@ -50,7 +50,12 @@ const DisplayProfile = ({
           <GetAvailability availability={availability} />
         </div>
       ) : (
-        <></>
+        <div style={{ ...styles.profile }}>
+          <h4>
+            Wanna see what a certain someone is up to? Search for their username
+            to see which repos they have updated most recently!
+          </h4>
+        </div>
       )}
     </div>
   );
