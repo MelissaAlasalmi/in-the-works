@@ -34,21 +34,32 @@ function getRepoData(login) {
   return data;
 }
 
+function getSize(len) {
+  if (len > 300) return 'lg';
+  else if (len < 300 && len > 100) return 'md';
+  else if (len < 100 && len > 50) return 'sm';
+  else return 'xs';
+}
+
 export const RepoGrid = ({ login }) => {
   let repos = getRepoData(login);
+
+  repos.sort(function (a, b) {
+    return new Date(b.date) - new Date(a.date);
+  });
+
   if (repos) {
-    console.log(repos);
     return (
       <div style={styles.card_container}>
         {repos.map((item, index) => (
           <Card
             key={index}
-            size={'md'}
+            size={item.description ? getSize(item.description.length) : 'xxs'}
             name={item.name}
             description={item.description}
             language={item.language}
             url={item.url}
-            updated_at={item.updated_at}
+            updated_at={item.date}
           />
         ))}
       </div>

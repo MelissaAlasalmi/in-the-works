@@ -119,6 +119,7 @@ const Profile = () => {
   const handleSearch = (event) => setUserInput(event.target.value);
   const handleSubmit = () => {
     setError('');
+    setLogin('');
     fetch(`https://api.github.com/users/${userInput}`, {
       headers: {
         Authorization: `token ${myToken}`,
@@ -157,6 +158,7 @@ const styles = {
     margin: 15,
     padding: 15,
     borderRadius: '16px',
+    boxShadow: '0px 0px 10px rgba(0,0,0,0.2)',
     backgroundColor: '#FFC857',
     width: '40vw',
     gridTemplateColumns: 'repeat(auto-fill, 250px)',
