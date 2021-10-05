@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '../App.css';
 
-// ˇˇˇˇall credit for these two functions go to Github user zellwkˇˇˇˇ//
+// ˇˇˇˇ all credit for these two functions go to Github user zellwk ˇˇˇˇ//
 export function toKebab(string) {
   return string
     .split('')
@@ -24,7 +24,7 @@ export function toTitle(string) {
     })
     .join(' ');
 }
-//^^^^all credit for these two functions go to Github user zellwk^^^^//
+//^^^^ all credit for these two functions go to Github user zellwk ^^^^//
 
 export const Card = ({ size, name, description, language, url }) => {
   return (

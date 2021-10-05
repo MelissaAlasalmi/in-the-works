@@ -3,6 +3,13 @@ import '../App.css';
 import { useState, useEffect } from 'react';
 import { Card } from './card';
 
+function getSize(len) {
+  if (len > 300) return 'lg';
+  else if (len < 300 && len > 100) return 'md';
+  else if (len < 100 && len > 50) return 'sm';
+  else return 'xs';
+}
+
 function getRepoData(login) {
   const [data, setData] = useState([]);
 
@@ -26,13 +33,6 @@ function getRepoData(login) {
     getData();
   }, []);
   return data;
-}
-
-function getSize(len) {
-  if (len > 300) return 'lg';
-  else if (len < 300 && len > 100) return 'md';
-  else if (len < 100 && len > 50) return 'sm';
-  else return 'xs';
 }
 
 export const RepoGrid = ({ login }) => {

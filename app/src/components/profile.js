@@ -14,6 +14,20 @@ function GetAvailability({ availability }) {
   else return <></>;
 }
 
+function GetBlog({ blog }) {
+  return (
+    <div>
+      {blog ? (
+        <h6>
+          <a href={blog}>Personal link</a>
+        </h6>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
+}
+
 const DisplayProfile = ({
   name,
   avatar,
@@ -36,24 +50,13 @@ const DisplayProfile = ({
           {avatar ? <img src={avatar} alt="avatar" /> : <></>}
           {name ? <h1>{name}</h1> : <h1>Anonymous user</h1>}
           {email ? <h6>Email: {email}</h6> : <></>}
-          {blog ? (
-            <h6>
-              <a href={blog}>Personal link</a>
-            </h6>
-          ) : (
-            <></>
-          )}
+          <GetBlog blog={blog} />
           {bio ? <h6>{bio}</h6> : <></>}
           {location ? <h6>Location: {location}</h6> : <></>}
           <GetAvailability availability={availability} />
         </div>
       ) : (
-        <div style={{ ...styles.profile }}>
-          <h4>
-            Wanna see what a certain someone is up to? Search for their username
-            to see which repos they have updated most recently!
-          </h4>
-        </div>
+        <></>
       )}
     </div>
   );
