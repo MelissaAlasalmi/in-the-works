@@ -15,6 +15,10 @@ I will continue with this project over the next few weeks by:
   - repos by language choice
   - switches the repo card order based on most recently updated, most commits, most stars, most forks, etc
 
+This [video tutorial](https://youtu.be/baBvJDmziGQ) was hugely helpful for creating the current layout of the repo cards.  
+
+Also, I used two functions by [zellwk](https://github.com/zellwk) [for case conversion](https://zellwk.com/blog/case-conversion/).  
+
 ## How to run it
 - clone the repo
 - inside the app directory run:
