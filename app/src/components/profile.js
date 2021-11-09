@@ -1,5 +1,5 @@
 import '../App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { RepoGrid } from './grid';
 
@@ -36,35 +36,35 @@ const DisplayProfile = ({
   email,
   availability,
   bio,
-  error,
-  login,
 }) => {
   return (
-    <div>
-      {error ? (
-        <div>
-          <h1>User {error}</h1>
-        </div>
-      ) : login ? (
-        <div style={{ ...styles.profile }}>
-          {avatar ? <img src={avatar} alt="avatar" /> : <></>}
-          {name ? <h1>{name}</h1> : <h1>Anonymous user</h1>}
-          {email ? <h6>Email: {email}</h6> : <></>}
-          <GetBlog blog={blog} />
-          {bio ? <h6>{bio}</h6> : <></>}
-          {location ? <h6>Location: {location}</h6> : <></>}
-          <GetAvailability availability={availability} />
-        </div>
-      ) : (
-        <></>
-      )}
+    <div style={{ ...styles.profile }}>
+      {avatar ? <img src={avatar} alt="avatar" /> : <></>}
+      {name ? <h1>{name}</h1> : <h1>Anonymous user</h1>}
+      {email ? <h6>Email: {email}</h6> : <></>}
+      <GetBlog blog={blog} />
+      {bio ? <h6>{bio}</h6> : <></>}
+      {location ? <h6>Location: {location}</h6> : <></>}
+      <GetAvailability availability={availability} />
     </div>
   );
 };
 
-const Search = ({ handleSearch, handleSubmit }) => {
+const Search = ({ userInput, setUserInput, setError, setLogin, setData }) => {
+  const handleSearch = (event) => setUserInput(event.target.value);
+  const handleSubmit = () => {
+    setError('');
+    setLogin('');
+    fetch(`https://api.github.com/users/${userInput}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) setError(data.message);
+        else setData(data);
+      });
+  };
+
   return (
-    <div className={'right'}>
+    <div>
       <input
         type="text"
         id="search"
@@ -90,14 +90,6 @@ const Profile = () => {
   const [userInput, setUserInput] = useState('');
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${userInput}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-      });
-  }, []);
-
   const setData = ({
     name,
     login,
@@ -118,35 +110,35 @@ const Profile = () => {
     setBio(bio);
   };
 
-  const handleSearch = (event) => setUserInput(event.target.value);
-  const handleSubmit = () => {
-    setError('');
-    setLogin('');
-    fetch(`https://api.github.com/users/${userInput}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) setError(data.message);
-        else setData(data);
-      });
-  };
-
   return (
     <Container fluid>
       <Row>
-        <Search handleSearch={handleSearch} handleSubmit={handleSubmit} />
+        <Search
+          userInput={userInput}
+          setUserInput={setUserInput}
+          setError={setError}
+          setLogin={setLogin}
+          setData={setData}
+        />
       </Row>
-      <DisplayProfile
-        name={name}
-        avatar={avatar}
-        blog={blog}
-        location={location}
-        email={email}
-        availability={availability}
-        bio={bio}
-        error={error}
-        login={login}
-      />
-      {login ? <RepoGrid login={login} /> : <></>}
+      {error ? (
+        <h1>User {error}</h1>
+      ) : login ? (
+        <div>
+          <DisplayProfile
+            name={name}
+            avatar={avatar}
+            blog={blog}
+            location={location}
+            email={email}
+            availability={availability}
+            bio={bio}
+          />
+          <RepoGrid login={login} />
+        </div>
+      ) : (
+        <></>
+      )}
     </Container>
   );
 };
